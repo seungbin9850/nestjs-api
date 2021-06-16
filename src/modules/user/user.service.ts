@@ -3,6 +3,7 @@ import { HttpError } from 'src/exception';
 import { UserRepository } from 'src/repositories';
 import { hash } from 'src/utils';
 import { CreateUserDTO } from './dto/create-user.dto';
+import { User } from 'src/entities';
 
 @Injectable()
 export class UserService {
@@ -13,7 +14,10 @@ export class UserService {
     if (await this.findUser(userId))
       throw new HttpError(409, 'Already Exists User');
     const hashed = hash(password);
-    await this.userRepository.create({ userId, password: hashed });
+    const user = new User();
+    user.userId = userId;
+    user.password = hashed;
+    await this.userRepository.save(user);
   }
 
   private async findUser(userId: string) {
