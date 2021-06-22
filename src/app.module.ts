@@ -4,9 +4,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import connectionOptions from 'ormconfig';
 import { CatchException } from './exception';
 import { UserModule, AuthModule } from './modules';
+import { PostModule } from './modules/post';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(connectionOptions), UserModule, AuthModule],
+  imports: [
+    TypeOrmModule.forRoot(connectionOptions),
+    UserModule,
+    AuthModule,
+    PostModule,
+  ],
   providers: [{ provide: APP_FILTER, useClass: CatchException }],
 })
 export class AppModule {}
