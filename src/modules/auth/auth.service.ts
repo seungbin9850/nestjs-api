@@ -14,7 +14,7 @@ export class AuthService {
     if (!user) throw new HttpError(404, 'user not found');
     const check = compare(password, user.password);
     if (!check) throw new HttpError(401, 'password incorrect');
-    const accessToken = await makeToken(userId);
+    const accessToken = await makeToken(user.id);
     return accessToken;
   }
 }
