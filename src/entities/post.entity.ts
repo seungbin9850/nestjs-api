@@ -1,0 +1,24 @@
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { User } from './user.entity';
+
+@Entity()
+export class Post {
+  @PrimaryColumn({ length: 45 })
+  id: string;
+
+  @Column({ length: 100 })
+  title: string;
+
+  @Column({ length: 1000 })
+  content: string;
+
+  @Column({ name: 'user_id', length: 45 })
+  userId: string;
+
+  @ManyToOne((type) => User, (user) => user.id, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'user_id' })
+  user!: User;
+}
