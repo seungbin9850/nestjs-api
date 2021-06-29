@@ -3,6 +3,7 @@ import { Post } from 'src/entities/post.entity';
 import { PostRepository } from 'src/repositories';
 import { makeId } from 'src/utils/uuid';
 import { WritePostDTO } from './dto';
+import { GetPostsListDTO } from './dto/get-posts-list.dto';
 
 @Injectable()
 export class PostService {
@@ -16,5 +17,10 @@ export class PostService {
     post.content = content;
     post.userId = userId;
     await this.postRepository.save(post);
+  }
+
+  async getPostList(req: GetPostsListDTO) {
+    const { page } = req;
+    return await this.postRepository.getList(Number(page));
   }
 }
