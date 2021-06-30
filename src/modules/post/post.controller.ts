@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from 'src/middlewares';
 import { Token } from 'src/utils/decorators/user.decorator';
-import { UpdatePostDTO, WritePostDTO } from './dto';
+import { GetDetailPostDTO, UpdatePostDTO, WritePostDTO } from './dto';
 import { GetPostsListDTO } from './dto/get-posts-list.dto';
 import { PostService } from './post.service';
 
@@ -54,5 +54,11 @@ export class PostController {
     const { postId } = param;
     await this.postService.updatePost(req, id, postId);
     return { status: 200, message: 'success' };
+  }
+
+  @Get('/:postId')
+  async getDetailPost(@Param() param: GetDetailPostDTO) {
+    const post = await this.postService.getDetailPost(param);
+    return { status: 200, messae: 'success', data: post };
   }
 }
