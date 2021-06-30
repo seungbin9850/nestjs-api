@@ -3,7 +3,7 @@ import { Post } from 'src/entities/post.entity';
 import { HttpError } from 'src/exception';
 import { PostRepository } from 'src/repositories';
 import { makeId } from 'src/utils/uuid';
-import { UpdatePostDTO, WritePostDTO } from './dto';
+import { GetDetailPostDTO, UpdatePostDTO, WritePostDTO } from './dto';
 import { GetPostsListDTO } from './dto/get-posts-list.dto';
 
 @Injectable()
@@ -32,5 +32,10 @@ export class PostService {
     post.title = title;
     post.content = content;
     await this.postRepository.save(post);
+  }
+
+  async getDetailPost(req: GetDetailPostDTO) {
+    const { postId } = req;
+    return await this.postRepository.findOne(postId);
   }
 }
