@@ -12,6 +12,7 @@ const connectionOptions: ConnectionOptions = {
   database: config.mysql.name,
   synchronize: true,
   logging: true,
+  timezone: '+09:00',
   entities: [User, Post],
 };
 
