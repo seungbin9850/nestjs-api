@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from 'src/middlewares';
 import { Token } from 'src/utils/decorators/user.decorator';
-import { WritePostDTO } from './dto';
+import { UpdatePostDTO, WritePostDTO } from './dto';
 import { GetPostsListDTO } from './dto/get-posts-list.dto';
 import { PostService } from './post.service';
 
@@ -32,5 +41,18 @@ export class PostController {
     });
 
     return { status: 200, message: 'success', data: response };
+  }
+
+  @Put('/:postId')
+  @UseGuards(new AuthGuard())
+  async updatePost(
+    @Body() req: UpdatePostDTO,
+    @Param() param: { postId: string },
+    @Token() decoded: any,
+  ) {
+    const { id } = decoded;
+    const { postId } = param;
+    await this.postService.updatePost(req, id, postId);
+    return { status: 200, message: 'success' };
   }
 }
