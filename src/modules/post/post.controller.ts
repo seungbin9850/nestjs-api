@@ -37,6 +37,7 @@ export class PostController {
         id: post.id,
         title: post.title,
         content: post.content,
+        date: post.date,
       };
     });
 
@@ -59,6 +60,15 @@ export class PostController {
   @Get('/:postId')
   async getDetailPost(@Param() param: GetDetailPostDTO) {
     const post = await this.postService.getDetailPost(param);
-    return { status: 200, messae: 'success', data: post };
+    return {
+      status: 200,
+      messae: 'success',
+      data: {
+        id: post.id,
+        title: post.title,
+        content: post.content,
+        date: post.date,
+      },
+    };
   }
 }

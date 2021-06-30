@@ -5,6 +5,7 @@ import { EntityRepository, Repository } from 'typeorm';
 export class PostRepository extends Repository<Post> {
   async getList(page: number) {
     return await this.createQueryBuilder('post')
+      .orderBy('post.created_at', 'DESC')
       .offset(page * 3)
       .limit(3)
       .getMany();

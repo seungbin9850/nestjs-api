@@ -1,4 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { User } from './user.entity';
 
 @Entity()
@@ -14,6 +21,12 @@ export class Post {
 
   @Column({ name: 'user_id', length: 45 })
   userId: string;
+
+  @Column()
+  date: string;
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
   @ManyToOne((type) => User, (user) => user.id, {
     onUpdate: 'CASCADE',
