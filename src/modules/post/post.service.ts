@@ -49,8 +49,10 @@ export class PostService {
     return await this.postRepository.findOne(postId);
   }
 
-  async deletePost(req: DeletePostDTO) {
+  async deletePost(req: DeletePostDTO, userId: string) {
     const { postId } = req;
+    const post = await this.postRepository.findOne(postId);
+    if (post.userId !== userId) throw new HttpError(403, 'Not Your Post');
     await this.postRepository.delete(postId);
   }
 }

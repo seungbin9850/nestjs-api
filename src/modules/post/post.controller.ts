@@ -80,8 +80,8 @@ export class PostController {
 
   @Delete('/:postId')
   @UseGuards(new AuthGuard())
-  async deletePost(@Param() param: DeletePostDTO) {
-    await this.postService.deletePost(param);
+  async deletePost(@Param() param: DeletePostDTO, @Token() decoded: any) {
+    await this.postService.deletePost(param, decoded.id);
     return { status: 200, message: 'success' };
   }
 }
