@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -10,7 +11,12 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from 'src/middlewares';
 import { Token } from 'src/utils/decorators/user.decorator';
-import { GetDetailPostDTO, UpdatePostDTO, WritePostDTO } from './dto';
+import {
+  DeletePostDTO,
+  GetDetailPostDTO,
+  UpdatePostDTO,
+  WritePostDTO,
+} from './dto';
 import { GetPostsListDTO } from './dto/get-posts-list.dto';
 import { PostService } from './post.service';
 
@@ -70,5 +76,12 @@ export class PostController {
         date: post.date,
       },
     };
+  }
+
+  @Delete('/:postId')
+  @UseGuards(new AuthGuard())
+  async deletePost(@Param() param: DeletePostDTO) {
+    await this.postService.deletePost(param);
+    return { status: 200, message: 'success' };
   }
 }
