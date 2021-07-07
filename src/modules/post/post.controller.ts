@@ -44,6 +44,7 @@ export class PostController {
         title: post.title,
         content: post.content,
         date: post.date,
+        isMine: post['isMine'],
       };
     });
 
